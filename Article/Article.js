@@ -112,3 +112,20 @@ const data = [
   Step 5: Add a new article to the array. Make sure it is in the same format as the others. Refresh the page to see the new artible
 
 */
+
+class Article {
+  constructor(createElement){
+    this.createElement = createElement;
+    this.expandButton = this.createElement.querySelector('.expandButton');
+    this.expandButton.innerText = 'expand';
+    this.expandButton.addEventListener('click', () => {this.expandArticle() });
+
+    }
+    expandArticle() {
+      this.createElement.classList.toggle('article-open');
+    }
+  }
+
+  let articles = document.querySelectorAll('.article').forEach (article => {
+    new Article(article);
+  });
