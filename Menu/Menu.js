@@ -33,3 +33,15 @@ let menuItems = [
   Step 6: add the menu component to the DOM.
   
 */
+const toggleMenu = (event) => {
+  
+  menu.classList.toggle('menu--open');
+}
+
+
+const menu = document.querySelector('.menu');
+
+
+const menuButton= document.querySelector('.menu-button');
+
+ menuButton.addEventListener( "click", toggleMenu);

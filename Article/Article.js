@@ -113,19 +113,51 @@ const data = [
 
 */
 
-class Article {
-  constructor(createElement){
-    this.createElement = createElement;
-    this.expandButton = this.createElement.querySelector('.expandButton');
-    this.expandButton.innerText = 'expand';
-    this.expandButton.addEventListener('click', () => {this.expandArticle() });
+function createArticle () {
+  const articleDiv = document.createElement('div');
+  article.className = 'article';
 
-    }
-    expandArticle() {
-      this.createElement.classList.toggle('article-open');
-    }
-  }
+  const articleTitle = document.createElement('h2');
+    this.title = contentObj.title;
+    articleTitle.textContent = this.title;
+    articleDiv.appendChild(articleTitle);
+  
+    const pDate = document.createElement('p')
+    pDate.className = "date";
+    this.date = contentObj.date;
+    pDate.textContent = this.date;
+    articleDiv.appendChild(pDate);
 
-  let articles = document.querySelectorAll('.article').forEach (article => {
-    new Article(article);
-  });
+    const p1 = document.createElement('p');
+    const p2 = document.createElement('p');
+    const p3 = document.createElement('p');
+
+    this.paragraphOne = contentObj.firstParagraph;
+    this.paragraphTwo = contentObj.secondParagraph;
+    this.paragraphThree = contentObj.thirdParagraph;
+
+    p1.textContent = this.paragraphOne;
+    p2.textContent = this.paragraphTwo;
+    p3.textContent = this.paragraphThree;
+
+    articleDiv.appendChild(p1);
+    articleDiv.appendChild(p2);
+    articleDiv.appendChild(p3);
+
+    const spanBtn = document.createElement('span');
+    spanBtn.classList = "expandButton";
+    articleDiv.appendChild(spanBtn);
+
+    spanBtn.addEventListener('click', (event) => {
+      articleDiv.classList.toggle("article-open");
+    });
+  
+    return articleDiv;
+}
+
+const articles = data.forEach((article) => {
+  return createArticle(article);
+});
+
+const articleContainer = document.querySelectorAll(".articles");
+articleContainer.appendChild(articles);
