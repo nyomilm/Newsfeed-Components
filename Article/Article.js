@@ -113,51 +113,69 @@ const data = [
 
 */
 
-function createArticle () {
-  const articleDiv = document.createElement('div');
-  article.className = 'article';
+class ArticleList {
+  constructor(articles) {
+    this.articles = articles;
+    this.articlesContainer = document.querySelector(".articles");
+    this.createArticles();
 
-  const articleTitle = document.createElement('h2');
-    this.title = contentObj.title;
-    articleTitle.textContent = this.title;
-    articleDiv.appendChild(articleTitle);
-  
-    const pDate = document.createElement('p')
-    pDate.className = "date";
-    this.date = contentObj.date;
-    pDate.textContent = this.date;
-    articleDiv.appendChild(pDate);
+    this.expandButtons = document.querySelectorAll(".expandButton");
+    this.expandButtons.forEach(button =>
+      button.addEventListener("click", e => this.changeArticleExpandState(e))
+    );
 
-    const p1 = document.createElement('p');
-    const p2 = document.createElement('p');
-    const p3 = document.createElement('p');
+    this.closeButtons = document.querySelectorAll(".close");
+    this.closeButtons.forEach(button =>
+      button.addEventListener("click", e => this.removeArticle(e))
+    );
+  }
 
-    this.paragraphOne = contentObj.firstParagraph;
-    this.paragraphTwo = contentObj.secondParagraph;
-    this.paragraphThree = contentObj.thirdParagraph;
+  createArticles() {
+    this.articles.map(article => {
+      this.article = document.createElement("div");
+      this.article.classList.add("article");
+      this.articleH2 = document.createElement("h2");
+      this.articleH2.textContent = article.title;
+      this.articleDate = document.createElement("p");
+      this.articleDate.classList.add("date");
+      this.articleDate.textContent = article.date;
+      this.articleFirstPara = document.createElement("p");
+      this.articleFirstPara.textContent = article.firstParagraph;
+      this.articleSecondPara = document.createElement("p");
+      this.articleSecondPara.textContent = article.secondParagraph;
+      this.articleThirdPara = document.createElement("p");
+      this.articleThirdPara.textContent = article.thirdParagraph;
+      this.articleExpandButton = document.createElement("span");
+      this.articleExpandButton.classList.add("expandButton");
+      this.articleExpandButton.textContent = "Click to Expand";
+      this.articleCloseButton = document.createElement("span");
+      this.articleCloseButton.classList.add("close");
+      this.articleCloseButton.textContent = "x";
 
-    p1.textContent = this.paragraphOne;
-    p2.textContent = this.paragraphTwo;
-    p3.textContent = this.paragraphThree;
-
-    articleDiv.appendChild(p1);
-    articleDiv.appendChild(p2);
-    articleDiv.appendChild(p3);
-
-    const spanBtn = document.createElement('span');
-    spanBtn.classList = "expandButton";
-    articleDiv.appendChild(spanBtn);
-
-    spanBtn.addEventListener('click', (event) => {
-      articleDiv.classList.toggle("article-open");
+      this.articlesContainer.appendChild(this.article);
+      this.article.appendChild(this.articleH2);
+      this.article.appendChild(this.articleDate);
+      this.article.appendChild(this.articleFirstPara);
+      this.article.appendChild(this.articleSecondPara);
+      this.article.appendChild(this.articleThirdPara);
+      this.article.appendChild(this.articleExpandButton);
+      this.article.appendChild(this.articleCloseButton);
     });
-  
-    return articleDiv;
+  }
+
+  changeArticleExpandState(e) {
+    e.stopPropagation();
+    e.currentTarget.textContent =
+      e.currentTarget.textContent === "Click to Expand"
+        ? "Click to Close"
+        : "Click to Expand";
+    e.target.parentNode.classList.toggle("article-open");
+  }
+
+  removeArticle(e) {
+    e.stopPropagation();
+    this.articlesContainer.removeChild(e.target.parentNode);
+  }
 }
 
-const articles = data.forEach((article) => {
-  return createArticle(article);
-});
-
-const articleContainer = document.querySelectorAll(".articles");
-articleContainer.appendChild(articles);
+const myArticles = new ArticleList(data);
